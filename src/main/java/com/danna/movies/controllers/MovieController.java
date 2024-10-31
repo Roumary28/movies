@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,4 +57,32 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
+    @CrossOrigin
+    @PutMapping("/{id}")
+    public ResponseEntity<Movie> updateMovie(@PathVariable Long id,@RequestBody Movie updatedMovie) {
+        if (!movieRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        updatedMovie.setId(id);
+        Movie savedMovie = movieRepository.save(updatedMovie);
+        return ResponseEntity.ok(savedMovie);
+    }
+
+    @CrossOrigin
+    @GetMapping("/vote/{id}/{rating}")
+    public ResponseEntity<Movie> voteMovie(@PathVariable Long id,@PathVariable double rating ) {
+        if (!movieRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        Optional<Movie> optional = movieRepository.findById(id);
+        Movie movie = optional.get();
+        // movie.rating votos actuales
+        // movie.votes numero total de votos
+        double newRating = ( (movie.getVotos() * movie.getRating()) + rating)/ (movie.getVotos() + 1 );
+        movie.setVotos(movie.getVotos() + 1);
+        movie.setRating(newRating);
+
+        Movie savedMovie = movieRepository.save(movie);
+        return ResponseEntity.ok(savedMovie);
+    }
 }

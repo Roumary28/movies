@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
@@ -22,11 +23,13 @@ public class MovieController {
     @Autowired
     private MovieRepository movieRepository;
 
+    @CrossOrigin
     @GetMapping
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public ResponseEntity<Movie> getMovieById(@PathVariable Long id) {
         Optional<Movie> movie = movieRepository.findById(id);

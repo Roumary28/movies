@@ -25,8 +25,11 @@ cd movie-api-rest
 2. Configura la base de datos en el archivo application.properties:
 
 spring.datasource.url=jdbc:mysql://localhost:3306/movie_db
+
 spring.datasource.username=tu_usuario
+
 spring.datasource.password=tu_contraseña
+
 spring.jpa.hibernate.ddl-auto=update
 
 3. Ejecuta la aplicacion 

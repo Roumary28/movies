@@ -67,7 +67,7 @@ La tabla `Movies` contiene las siguientes columnas:
           "rating": 8.8,
           "imagen_url": "https://example.com/inception.jpg"
       },
-      ...
+     
   ]
 
  ### Obteter una pelicula por ID
